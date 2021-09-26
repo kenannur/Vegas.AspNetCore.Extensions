@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Authors>Kenan Nur</Authors>
@@ -7,8 +6,8 @@
     <Title>Vegas.AspNetCore.Common</Title>
     <RepositoryUrl>https://github.com/kenannur/Vegas.AspNetCore.Extensions</RepositoryUrl>
     <PackageId>Vegas.AspNetCore.Common</PackageId>
+    <PackageVersion>1.0.0</PackageVersion>
   </PropertyGroup>
-
   <ItemGroup>
     <None Remove="Exceptions\" />
     <None Remove="Filters\" />
