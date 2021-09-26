@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Authors>Kenan Nur</Authors>
+    <Owners>Kenan Nur</Owners>
+    <Title>Vegas.AspNetCore.Logger</Title>
+    <RepositoryUrl>https://github.com/kenannur/Vegas.AspNetCore.Extensions</RepositoryUrl>
+    <PackageId>Vegas.AspNetCore.Logger</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Serilog\" />
+    <None Remove="Serilog.AspNetCore" />
+    <None Remove="Serilog.Sinks.File" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Serilog\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+  </ItemGroup>
+</Project>
