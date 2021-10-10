@@ -6,7 +6,7 @@
     <Title>Vegas.AspNetCore.Common</Title>
     <RepositoryUrl>https://github.com/kenannur/Vegas.AspNetCore.Extensions</RepositoryUrl>
     <PackageId>Vegas.AspNetCore.Common</PackageId>
-    <PackageVersion>1.0.1</PackageVersion>
+    <PackageVersion>1.0.2</PackageVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Exceptions\" />
@@ -15,6 +15,7 @@
     <None Remove="Models\" />
     <None Remove="Microsoft.AspNetCore.Mvc.Core" />
     <None Remove="Controllers\" />
+    <None Remove="Microsoft.AspNetCore.Mvc" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Exceptions\" />
@@ -24,10 +25,10 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Vegas.AspNetCore.Localization\Vegas.AspNetCore.Localization.csproj" />
     <ProjectReference Include="..\Vegas.NetCore.Common\Vegas.NetCore.Common.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
   </ItemGroup>
 </Project>
