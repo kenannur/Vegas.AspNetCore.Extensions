@@ -13,11 +13,13 @@
     <None Remove="DependencyInjection\" />
     <None Remove="Settings\" />
     <None Remove="Microsoft.AspNetCore.Authentication.JwtBearer" />
+    <None Remove="DataProtection\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Context\" />
     <Folder Include="DependencyInjection\" />
     <Folder Include="Settings\" />
+    <Folder Include="DataProtection\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Vegas.AspNetCore.Configuration\Vegas.AspNetCore.Configuration.csproj" />
