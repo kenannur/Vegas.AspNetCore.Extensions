@@ -7,13 +7,14 @@ namespace Vegas.AspNetCore.Configuration.Extensions
 {
     public static class ConfigurationExtensions
     {
-        public static void ConfigureSettings<TInterface, TSettings>(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection ConfigureSettings<TInterface, TSettings>(this IServiceCollection services,
+            IConfiguration configuration)
             where TInterface : class
             where TSettings : class, TInterface
         {
             configuration.ThrowIfNotExists<TSettings>();
             services.Configure<TSettings>(configuration.GetSection(typeof(TSettings).Name));
-            services.AddSingleton<TInterface>(sp => sp.GetRequiredService<IOptions<TSettings>>().Value);
+            return services.AddSingleton<TInterface>(sp => sp.GetRequiredService<IOptions<TSettings>>().Value);
         }
 
         public static bool Exists<TSettings>(this IConfiguration configuration)
