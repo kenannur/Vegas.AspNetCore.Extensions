@@ -14,7 +14,8 @@ namespace Vegas.AspNetCore.Configuration.Extensions
         {
             configuration.ThrowIfNotExists<TSettings>();
             services.Configure<TSettings>(configuration.GetSection(typeof(TSettings).Name));
-            return services.AddSingleton<TInterface>(sp => sp.GetRequiredService<IOptions<TSettings>>().Value);
+            services.AddSingleton<TInterface>(sp => sp.GetRequiredService<IOptions<TSettings>>().Value);
+            return services;
         }
 
         public static bool Exists<TSettings>(this IConfiguration configuration)
