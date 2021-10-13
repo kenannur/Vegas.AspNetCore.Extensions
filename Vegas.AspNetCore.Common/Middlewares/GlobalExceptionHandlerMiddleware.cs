@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Logging;
@@ -80,11 +79,5 @@ namespace Vegas.AspNetCore.Common.Middlewares
             httpContext.Response.StatusCode = (int)code;
             await httpContext.Response.WriteAsync(jApiResponse);
         }
-    }
-
-    public static class GlobalExceptionHandlerMiddlewareExtensions
-    {
-        public static IApplicationBuilder UseGlobalExceptionHandler(this IApplicationBuilder builder)
-            => builder.UseMiddleware<GlobalExceptionHandlerMiddleware>();
     }
 }
