@@ -2,12 +2,15 @@
 
 namespace Vegas.AspNetCore.Common.Models
 {
-    public class ApiResponse
+    public class ApiResponse : ApiResponse<object>
+    { }
+
+    public class ApiResponse<TPayload> where TPayload : class
     {
         public bool IsSuccess { get; set; }
 
         public List<string> Messages { get; set; } = new List<string>();
 
-        public object MainResponse { get; set; }
+        public TPayload MainResponse { get; set; }
     }
 }
