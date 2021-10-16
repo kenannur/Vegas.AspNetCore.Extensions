@@ -14,11 +14,12 @@
     <ProjectReference Include="..\Vegas.AspNetCore.Configuration\Vegas.AspNetCore.Configuration.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Microsoft.AspNetCore.Routing" />
+    <None Remove="Microsoft.AspNetCore.Mvc.Core" />
   </ItemGroup>
 </Project>
