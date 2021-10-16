@@ -15,7 +15,7 @@ namespace Vegas.AspNetCore.Common.DependencyInjection
         /// <returns></returns>
         public static IServiceCollection AddAutoRouting(this IServiceCollection services, IConfiguration configuration)
         {
-            services.ConfigureSettings<IAutoRoutingSettings, AutoRoutingSettings>(configuration);
+            //services.ConfigureSettings<IAutoRoutingSettings, AutoRoutingSettings>(configuration);
             services.AddNamedHttpClient();
             return services;
         }
