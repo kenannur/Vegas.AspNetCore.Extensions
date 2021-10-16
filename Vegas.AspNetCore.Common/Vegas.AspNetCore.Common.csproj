@@ -6,7 +6,7 @@
     <Title>Vegas.AspNetCore.Common</Title>
     <RepositoryUrl>https://github.com/kenannur/Vegas.AspNetCore.Extensions</RepositoryUrl>
     <PackageId>Vegas.AspNetCore.Common</PackageId>
-    <PackageVersion>1.1.4</PackageVersion>
+    <PackageVersion>1.1.5</PackageVersion>
     <OutputType>Library</OutputType>
   </PropertyGroup>
   <ItemGroup>
