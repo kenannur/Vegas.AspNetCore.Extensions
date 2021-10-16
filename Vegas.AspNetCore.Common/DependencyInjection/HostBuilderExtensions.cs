@@ -1,8 +1,10 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json.Linq;
 
 namespace Vegas.AspNetCore.Common.DependencyInjection
 {
@@ -23,14 +25,34 @@ namespace Vegas.AspNetCore.Common.DependencyInjection
                 {
                     basePath = Path.Combine(basePath, folder);
                 }
-                config.SetBasePath(basePath);
 
-                var filePaths = Directory.GetFiles(basePath, "autoRouting.*.json", SearchOption.AllDirectories);
+                var filePaths = Directory.EnumerateFiles(basePath, "autoRouting.*.json", SearchOption.AllDirectories);
+                if (hosting.HostingEnvironment.IsDevelopment())
+                {
+                    filePaths = filePaths.Where(x => x.Contains(hosting.HostingEnvironment.EnvironmentName));
+                }
+                else
+                {
+                    filePaths = filePaths.Where(x => !x.Contains(hosting.HostingEnvironment.EnvironmentName));
+                }
+                var jArray = new JArray();
                 foreach (var filePath in filePaths)
                 {
-                    var fileName = filePath.Split("/").Last();
-                    config.AddJsonFile(fileName, true, true);
+                    var content = File.ReadAllText(filePath);
+                    jArray.Merge(JArray.Parse(content));
                 }
+
+                var jAutoRoutingsObject = new JObject
+                {
+                    { "AutoRoutings", jArray }
+                };
+                var jResultObject = new JObject
+                {
+                    { "AutoRoutingSettings", jAutoRoutingsObject }
+                };
+                var jsonBytes = Encoding.UTF8.GetBytes(jResultObject.ToString());
+                var jsonStream = new MemoryStream(jsonBytes);
+                config.AddJsonStream(jsonStream);
             });
         }
     }
