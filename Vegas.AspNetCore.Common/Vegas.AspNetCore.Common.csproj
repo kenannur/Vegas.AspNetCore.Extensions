@@ -9,28 +9,6 @@
     <PackageVersion>1.0.7</PackageVersion>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Exceptions\" />
-    <None Remove="Filters\" />
-    <None Remove="Middlewares\" />
-    <None Remove="Models\" />
-    <None Remove="Microsoft.AspNetCore.Mvc.Core" />
-    <None Remove="Controllers\" />
-    <None Remove="Microsoft.AspNetCore.Mvc" />
-    <None Remove="Settings\" />
-    <None Remove="DependencyInjection\" />
-    <None Remove="Microsoft.AspNetCore.Http.Extensions" />
-    <None Remove="Microsoft.Extensions.Http" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Exceptions\" />
-    <Folder Include="Filters\" />
-    <Folder Include="Middlewares\" />
-    <Folder Include="Models\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Settings\" />
-    <Folder Include="DependencyInjection\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Vegas.AspNetCore.Localization\Vegas.AspNetCore.Localization.csproj" />
     <ProjectReference Include="..\Vegas.NetCore.Common\Vegas.NetCore.Common.csproj" />
     <ProjectReference Include="..\Vegas.AspNetCore.Configuration\Vegas.AspNetCore.Configuration.csproj" />
