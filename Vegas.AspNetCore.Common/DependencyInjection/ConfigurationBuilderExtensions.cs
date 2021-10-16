@@ -17,7 +17,7 @@ namespace Vegas.AspNetCore.Common.DependencyInjection
         /// <param name="folder"></param>
         /// <returns></returns>
         public static IConfigurationBuilder ConfigureAutoRouting(this IConfigurationBuilder config,
-            IHostingEnvironment hosting, string folder = default)
+            IHostEnvironment hosting, string folder = default)
         {
             var basePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             if (!string.IsNullOrWhiteSpace(folder))
@@ -42,13 +42,13 @@ namespace Vegas.AspNetCore.Common.DependencyInjection
             }
 
             var jAutoRoutingsObject = new JObject
-                {
-                    { "AutoRoutings", jArray }
-                };
+            {
+                { "AutoRoutings", jArray }
+            };
             var jResultObject = new JObject
-                {
-                    { "AutoRoutingSettings", jAutoRoutingsObject }
-                };
+            {
+                { "AutoRoutingSettings", jAutoRoutingsObject }
+            };
             var jsonBytes = Encoding.UTF8.GetBytes(jResultObject.ToString());
             var jsonStream = new MemoryStream(jsonBytes);
             return config.AddJsonStream(jsonStream);
