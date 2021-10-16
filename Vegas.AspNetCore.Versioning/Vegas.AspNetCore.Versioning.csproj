@@ -6,7 +6,7 @@
     <Title>Vegas.AspNetCore.Versioning</Title>
     <RepositoryUrl>https://github.com/kenannur/Vegas.AspNetCore.Extensions</RepositoryUrl>
     <PackageId>Vegas.AspNetCore.Versioning</PackageId>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>1.0.1</PackageVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Extensions\" />
