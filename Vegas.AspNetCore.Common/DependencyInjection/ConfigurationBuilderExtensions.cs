@@ -16,7 +16,7 @@ namespace Vegas.AspNetCore.Common.DependencyInjection
         /// <param name="hostBuilder"></param>
         /// <param name="folder"></param>
         /// <returns></returns>
-        public static IConfigurationBuilder ConfigureAutoRouting(this IConfigurationBuilder config,
+        public static IConfigurationBuilder AddAutoRoutingConfiguration(this IConfigurationBuilder config,
             IHostEnvironment hosting, string folder = default)
         {
             var basePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
