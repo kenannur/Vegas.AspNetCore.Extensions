@@ -18,11 +18,4 @@
     <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
   </ItemGroup>
-  <ItemGroup>
-    <None Remove="Microsoft.AspNetCore.Mvc.Core" />
-    <None Remove="Microsoft.Extensions.Hosting.Abstractions" />
-    <None Remove="Microsoft.Extensions.Http" />
-    <None Remove="Microsoft.AspNetCore.Hosting" />
-    <None Remove="Microsoft.Extensions.Hosting" />
-  </ItemGroup>
 </Project>
