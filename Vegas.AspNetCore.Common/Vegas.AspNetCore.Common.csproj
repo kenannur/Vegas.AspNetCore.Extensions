@@ -15,13 +15,6 @@
     <ProjectReference Include="..\Vegas.AspNetCore.Configuration\Vegas.AspNetCore.Configuration.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="Microsoft.Extensions.Hosting.Abstractions" />
-    <None Remove="Microsoft.AspNetCore.Mvc.Core" />
-    <None Remove="Microsoft.AspNetCore.Routing.Abstractions" />
-    <None Remove="Microsoft.AspNetCore.Routing" />
-    <None Remove="Newtonsoft.Json" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 </Project>
