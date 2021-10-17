@@ -14,6 +14,8 @@
     <None Remove="Microsoft.AspNetCore.Localization" />
     <None Remove="Microsoft.Extensions.Configuration.Json" />
     <None Remove="Options\" />
+    <None Remove="Microsoft.Extensions.Configuration" />
+    <None Remove="Microsoft.Extensions.Configuration.Binder" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DependencyInjection\" />
@@ -23,5 +25,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Localization" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />
   </ItemGroup>
 </Project>

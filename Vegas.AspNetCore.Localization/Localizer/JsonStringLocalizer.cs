@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using Microsoft.AspNetCore.Builder;
@@ -11,11 +11,9 @@ namespace Vegas.AspNetCore.Localization.Localizer
 {
     public class JsonStringLocalizer : IJsonStringLocalizer
     {
-        private readonly ConcurrentDictionary<string, ConcurrentDictionary<string, string>> _localizerCache =
-            new ConcurrentDictionary<string, ConcurrentDictionary<string, string>>();
+        private readonly Dictionary<string, Dictionary<string, string>> _localizerCache;
 
-        public JsonStringLocalizer(IOptions<JsonStringLocalizerOptions> jsonStringLocalizerOptions,
-                                   IOptions<RequestLocalizationOptions> requestLocalizationOptions)
+        public JsonStringLocalizer(IOptions<JsonStringLocalizerOptions> jsonStringLocalizerOptions, IOptions<RequestLocalizationOptions> requestLocalizationOptions)
         {
             if (jsonStringLocalizerOptions == null)
             {
@@ -26,26 +24,25 @@ namespace Vegas.AspNetCore.Localization.Localizer
                 throw new ArgumentNullException(nameof(requestLocalizationOptions));
             }
 
-            SetupLocalizerCache(requestLocalizationOptions.Value, jsonStringLocalizerOptions.Value);
-        }
-
-        private void SetupLocalizerCache(RequestLocalizationOptions requestLocalizationOptions,
-                                         JsonStringLocalizerOptions jsonStringLocalizerOptions)
-        {
-            foreach (var cultureInfo in requestLocalizationOptions.SupportedCultures)
+            _localizerCache = new Dictionary<string, Dictionary<string, string>>();
+            foreach (var cultureInfo in requestLocalizationOptions.Value.SupportedCultures)
             {
                 var cultureName = cultureInfo.Name;
-                var resourceFileFullName = $"{jsonStringLocalizerOptions.ResourceFileName}.{cultureName}.json";
-                var resourceFullPath = Path.Combine(jsonStringLocalizerOptions.ResourceFilePath, resourceFileFullName);
+                var resourceFileFullName = $"{jsonStringLocalizerOptions.Value.ResourceFileName}.{cultureName}.json";
+                var resourceFullPath = Path.Combine(jsonStringLocalizerOptions.Value.ResourceFilePath, resourceFileFullName);
 
                 var keyValuePairs = new ConfigurationBuilder()
                     .AddJsonFile(resourceFullPath, optional: true, reloadOnChange: true)
                     .Build()
                     .AsEnumerable();
-                var dictionary = new ConcurrentDictionary<string, string>(keyValuePairs);
 
-                _localizerCache.TryAdd(cultureName, dictionary);
+                _localizerCache.TryAdd(cultureName, new Dictionary<string, string>(keyValuePairs));
             }
+        }
+
+        public JsonStringLocalizer(Dictionary<string, Dictionary<string, string>> cache)
+        {
+            _localizerCache = cache;
         }
 
         public string GetString(string key, string cultureName = default)
