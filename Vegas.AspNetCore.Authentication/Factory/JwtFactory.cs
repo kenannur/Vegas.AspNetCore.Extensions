@@ -6,17 +6,12 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Vegas.AspNetCore.Authentication.Settings;
 
-namespace Vegas.AspNetCore.Authentication.Context
+namespace Vegas.AspNetCore.Authentication.Factory
 {
-    [Obsolete("Use JwtFactory instead of this")]
-    internal class JwtContext : IJwtContext
+    internal class JwtFactory : IJwtFactory
     {
         private readonly IJwtSettings _jwtSettings;
-
-        public JwtContext(IJwtSettings jwtSettings)
-        {
-            _jwtSettings = jwtSettings;
-        }
+        public JwtFactory(IJwtSettings jwtSettings) => _jwtSettings = jwtSettings;
 
         public string CreateToken(string forRole)
         {
