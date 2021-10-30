@@ -6,7 +6,7 @@
     <Title>Vegas.AspNetCore.Authentication</Title>
     <RepositoryUrl>https://github.com/kenannur/Vegas.AspNetCore.Extensions</RepositoryUrl>
     <PackageId>Vegas.AspNetCore.Authentication</PackageId>
-    <PackageVersion>1.0.4</PackageVersion>
+    <PackageVersion>1.0.5</PackageVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Context\" />
