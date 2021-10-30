@@ -22,5 +22,17 @@ namespace Vegas.NetCore.Common.Extensions
             }
             return description;
         }
+
+        public static TEnum Next<TEnum>(this TEnum enumeration) where TEnum : Enum
+        {
+            var type = typeof(TEnum);
+            if (!type.IsEnum)
+            {
+                throw new ArgumentException($"{type.FullName} is not an enum");
+            }
+            var values = (TEnum[])Enum.GetValues(type);
+            int index = Array.IndexOf(values, enumeration) + 1;
+            return values.Length == index ? values[0] : values[index];
+        }
     }
 }
