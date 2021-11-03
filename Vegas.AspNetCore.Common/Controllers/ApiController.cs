@@ -4,10 +4,9 @@ using Vegas.AspNetCore.Common.Models;
 namespace Vegas.AspNetCore.Common.Controllers
 {
     [ApiController]
-    [Route("v{version:apiVersion}/[controller]/[action]")]
-    public abstract class ApiControllerBase : ControllerBase
+    public abstract class ApiController : ControllerBase
     {
-        protected ApiControllerBase() { }
+        protected ApiController() { }
 
         protected IActionResult OkResponse<TMainResponse>(TMainResponse mainResponse) => CreateOkResponse(mainResponse);
 
@@ -23,8 +22,12 @@ namespace Vegas.AspNetCore.Common.Controllers
         }
     }
 
-    [ApiController]
+
+    [Route("v{version:apiVersion}/[controller]/[action]")]
+    public abstract class ApiControllerBase : ApiController
+    { }
+
     [Route("v{version:apiVersion}/[controller]")]
-    public abstract class HttpControllerBase : ApiControllerBase
+    public abstract class HttpControllerBase : ApiController
     { }
 }
