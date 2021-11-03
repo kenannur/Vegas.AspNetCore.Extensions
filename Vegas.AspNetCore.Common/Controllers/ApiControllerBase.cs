@@ -22,4 +22,9 @@ namespace Vegas.AspNetCore.Common.Controllers
             });
         }
     }
+
+    [ApiController]
+    [Route("v{version:apiVersion}/[controller]")]
+    public abstract class HttpControllerBase : ApiControllerBase
+    { }
 }
