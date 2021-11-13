@@ -6,7 +6,7 @@
     <Title>Vegas.AspNetCore.Common</Title>
     <RepositoryUrl>https://github.com/kenannur/Vegas.AspNetCore.Extensions</RepositoryUrl>
     <PackageId>Vegas.AspNetCore.Common</PackageId>
-    <PackageVersion>1.2.6</PackageVersion>
+    <PackageVersion>1.2.7</PackageVersion>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Vegas.AspNetCore.Localization\Vegas.AspNetCore.Localization.csproj" />
