@@ -32,16 +32,21 @@ namespace Vegas.AspNetCore.Localization.Localizer
             _localizerCache = new Dictionary<string, Dictionary<string, string>>();
             foreach (var cultureInfo in requestLocalizationOptions.Value.SupportedCultures)
             {
-                var cultureName = cultureInfo.Name;
-                var resourceFileFullName = $"{jsonStringLocalizerOptions.Value.ResourceFileName}.{cultureName}.json";
-                var resourceFullPath = Path.Combine(jsonStringLocalizerOptions.Value.ResourceFilePath, resourceFileFullName);
+                try
+                {
+                    var cultureName = cultureInfo.Name;
+                    var resourceFileFullName = $"{jsonStringLocalizerOptions.Value.ResourceFileName}.{cultureName}.json";
+                    var resourceFullPath = Path.Combine(jsonStringLocalizerOptions.Value.ResourceFilePath, resourceFileFullName);
 
-                var keyValuePairs = new ConfigurationBuilder()
-                    .AddJsonFile(resourceFullPath, optional: true, reloadOnChange: true)
-                    .Build()
-                    .AsEnumerable();
+                    var keyValuePairs = new ConfigurationBuilder()
+                        .AddJsonFile(resourceFullPath, optional: true, reloadOnChange: true)
+                        .Build()
+                        .AsEnumerable();
 
-                _localizerCache.TryAdd(cultureName, new Dictionary<string, string>(keyValuePairs));
+                    _localizerCache.TryAdd(cultureName, new Dictionary<string, string>(keyValuePairs));
+                }
+                catch
+                { }
             }
         }
 
