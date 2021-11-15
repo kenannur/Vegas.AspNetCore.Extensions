@@ -8,31 +8,15 @@ namespace Vegas.AspNetCore.Common.Controllers
     {
         protected ApiController() { }
 
-        protected IActionResult OkResponse<TResponse>(TResponse response) => CreateOkResponse(response);
-        protected IActionResult OkResponse() => CreateOkResponse(new VoidResponse());
-        private IActionResult CreateOkResponse<TResponse>(TResponse response) => Ok(new ApiResponse
-        {
-            IsSuccess = true,
-            MainResponse = response
-        });
+        protected IActionResult OkResponse<TResponse>(TResponse response) => Ok(ApiResponse.Success(response));
+        protected IActionResult OkResponse() => OkResponse(VoidResponse.New);
 
-        protected IActionResult AcceptedResponse<TResponse>(TResponse response) => CreateAcceptedResponse(response);
-        protected IActionResult AcceptedResponse() => CreateAcceptedResponse(new VoidResponse());
-        private IActionResult CreateAcceptedResponse<TResponse>(TResponse response) => Accepted(new ApiResponse
-        {
-            IsSuccess = true,
-            MainResponse = response
-        });
+        protected IActionResult AcceptedResponse<TResponse>(TResponse response) => Accepted(ApiResponse.Success(response));
+        protected IActionResult AcceptedResponse() => AcceptedResponse(VoidResponse.New);
 
-        protected IActionResult CreatedResponse<TResponse>(TResponse response) => CreateCreatedResponse(response);
-        protected IActionResult CreatedResponse() => CreateCreatedResponse(new VoidResponse());
-        private IActionResult CreateCreatedResponse<TResponse>(TResponse response) => Created("", new ApiResponse
-        {
-            IsSuccess = true,
-            MainResponse = response
-        });
+        protected IActionResult CreatedResponse<TResponse>(TResponse response) => Created("", ApiResponse.Success(response));
+        protected IActionResult CreatedResponse() => CreatedResponse(VoidResponse.New);
     }
-
 
     [Route("v{version:apiVersion}/[controller]/[action]")]
     public abstract class ApiControllerBase : ApiController
