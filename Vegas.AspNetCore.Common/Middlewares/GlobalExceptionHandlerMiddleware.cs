@@ -69,15 +69,10 @@ namespace Vegas.AspNetCore.Common.Middlewares
                 messageList.AddRange(messages);
             }
 
-            var jApiResponse = new ApiResponse
-            {
-                IsSuccess = false,
-                Messages = messageList
-            }.ToJson();
-
             httpContext.Response.ContentType = MediaTypeNames.Application.Json;
             httpContext.Response.StatusCode = (int)code;
-            await httpContext.Response.WriteAsync(jApiResponse);
+            var apiResponse = ApiResponse.Failure(messageList);
+            await httpContext.Response.WriteAsync(apiResponse.ToJson());
         }
     }
 }
