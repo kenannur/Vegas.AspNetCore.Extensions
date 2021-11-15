@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Vegas.AspNetCore.Common.Models
 {
@@ -15,6 +16,12 @@ namespace Vegas.AspNetCore.Common.Models
         {
             IsSuccess = true,
             MainResponse = response
+        };
+
+        public static ApiResponse<TResponse> Failure(IEnumerable<string> messages) => new()
+        {
+            IsSuccess = false,
+            Messages = messages.ToList()
         };
     }
 }
