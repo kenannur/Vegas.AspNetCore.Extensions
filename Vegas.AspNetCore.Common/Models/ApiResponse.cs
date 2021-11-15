@@ -12,13 +12,13 @@ namespace Vegas.AspNetCore.Common.Models
         public List<string> Messages { get; set; } = new List<string>();
         public TResponse MainResponse { get; set; }
 
-        public static ApiResponse<TResponse> Success(TResponse response) => new()
+        public static ApiResponse<TResponse> Success(TResponse response) => new ApiResponse<TResponse>
         {
             IsSuccess = true,
             MainResponse = response
         };
 
-        public static ApiResponse<TResponse> Failure(IEnumerable<string> messages) => new()
+        public static ApiResponse<TResponse> Failure(IEnumerable<string> messages) => new ApiResponse<TResponse>
         {
             IsSuccess = false,
             Messages = messages.ToList()

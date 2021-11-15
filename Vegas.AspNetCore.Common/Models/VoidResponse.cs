@@ -2,6 +2,6 @@
 {
     public class VoidResponse
     {
-        public static VoidResponse New => new();
+        public static VoidResponse New => new VoidResponse();
     }
 }
