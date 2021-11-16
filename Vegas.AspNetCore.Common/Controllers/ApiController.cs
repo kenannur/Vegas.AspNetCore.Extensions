@@ -8,13 +8,13 @@ namespace Vegas.AspNetCore.Common.Controllers
     {
         protected ApiController() { }
 
-        protected IActionResult OkResponse<TResponse>(TResponse response) => Ok(ApiResponse.Success(response));
+        protected IActionResult OkResponse(object response) => Ok(ApiResponse.Success(response));
         protected IActionResult OkResponse() => OkResponse(VoidResponse.New);
 
-        protected IActionResult AcceptedResponse<TResponse>(TResponse response) => Accepted(ApiResponse.Success(response));
+        protected IActionResult AcceptedResponse(object response) => Accepted(ApiResponse.Success(response));
         protected IActionResult AcceptedResponse() => AcceptedResponse(VoidResponse.New);
 
-        protected IActionResult CreatedResponse<TResponse>(TResponse response) => Created("", ApiResponse.Success(response));
+        protected IActionResult CreatedResponse(object response) => Created("", ApiResponse.Success(response));
         protected IActionResult CreatedResponse() => CreatedResponse(VoidResponse.New);
     }
 

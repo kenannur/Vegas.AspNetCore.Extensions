@@ -19,11 +19,10 @@ namespace Vegas.AspNetCore.Common.Filters
 
         public override Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
         {
-            if (context.Result is OkObjectResult result && result.Value is ApiResponse apiResponse)
-            {
-                var localizedMessage = _jsonStringLocalizer.GetString(_message);
-                apiResponse.Messages.Add(localizedMessage);
-            }
+            context.Result.Is<OkObjectResult>()?.Messages.Add(_jsonStringLocalizer.GetString(_message));
+            context.Result.Is<AcceptedResult>()?.Messages.Add(_jsonStringLocalizer.GetString(_message));
+            context.Result.Is<CreatedResult>()?.Messages.Add(_jsonStringLocalizer.GetString(_message));
+
             return base.OnResultExecutionAsync(context, next);
         }
     }
@@ -33,6 +32,18 @@ namespace Vegas.AspNetCore.Common.Filters
         public ResponseMessageAttribute(string messageKey) : base(typeof(ResponseMessageFilterAttribute))
         {
             Arguments = new object[] { messageKey };
+        }
+    }
+
+    public static class ActionResultExtensions
+    {
+        public static ApiResponse Is<TActionResult>(this IActionResult actionResult) where TActionResult : ObjectResult
+        {
+            if (actionResult is TActionResult result && result.Value is ApiResponse apiResponse)
+            {
+                return apiResponse;
+            }
+            return null;
         }
     }
 }
