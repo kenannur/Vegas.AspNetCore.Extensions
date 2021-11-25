@@ -9,13 +9,14 @@ namespace Vegas.AspNetCore.Validation.DependencyInjection
 {
     public static class ValidationServiceCollectionExtensions
     {
-        public static IMvcBuilder AddAutoFluentValidation(this IMvcBuilder mvcBuilder, Assembly assembly)
+        public static IMvcBuilder AddAutoFluentValidation(this IMvcBuilder mvcBuilder,
+            Assembly assembly, bool disableDataAnnotations = false)
         {
             return mvcBuilder
                 .AddFluentValidation(configuration =>
                 {
                     configuration.RegisterValidatorsFromAssembly(assembly);
-                    configuration.DisableDataAnnotationsValidation = true;
+                    configuration.DisableDataAnnotationsValidation = disableDataAnnotations;
                 })
                 .ConfigureApiBehaviorOptions(options =>
                 {
@@ -25,7 +26,10 @@ namespace Vegas.AspNetCore.Validation.DependencyInjection
                     // options.SuppressModelStateInvalidFilter = true;
                     options.InvalidModelStateResponseFactory = context =>
                     {
-                        var errorMessages = context.ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage).ToList();
+                        var errorMessages = context.ModelState.Values
+                            .SelectMany(v => v.Errors)
+                            .Select(v => v.ErrorMessage)
+                            .ToList();
 
                         context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                         context.HttpContext.Items.Add("ErrorMessages", errorMessages);
