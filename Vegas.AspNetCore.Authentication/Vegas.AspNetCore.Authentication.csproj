@@ -9,7 +9,6 @@
     <PackageVersion>1.0.5</PackageVersion>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Context\" />
     <None Remove="DependencyInjection\" />
     <None Remove="Settings\" />
     <None Remove="Microsoft.AspNetCore.Authentication.JwtBearer" />
@@ -17,7 +16,6 @@
     <None Remove="Factory\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Context\" />
     <Folder Include="DependencyInjection\" />
     <Folder Include="Settings\" />
     <Folder Include="DataProtection\" />

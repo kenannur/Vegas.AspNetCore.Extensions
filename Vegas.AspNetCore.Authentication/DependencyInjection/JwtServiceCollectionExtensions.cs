@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Vegas.AspNetCore.Authentication.Context;
 using Vegas.AspNetCore.Authentication.Factory;
 using Vegas.AspNetCore.Authentication.Settings;
 using Vegas.AspNetCore.Configuration.Extensions;
@@ -39,7 +38,6 @@ namespace Vegas.AspNetCore.Authentication.DependencyInjection
         private static void ConfigureJwtAuthentication(this IServiceCollection services)
         {
             services.AddScoped<IJwtFactory, JwtFactory>();
-            services.AddScoped<IJwtContext, JwtContext>(sp => new JwtContext(sp.GetRequiredService<IJwtSettings>()));
 
             services.AddAuthentication(_authenticationScheme)
                     .AddJwtBearer();

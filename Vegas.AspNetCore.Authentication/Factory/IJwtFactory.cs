@@ -2,6 +2,6 @@
 {
     public interface IJwtFactory
     {
-        string CreateToken(string forRole);
+        string CreateToken(params string[] roles);
     }
 }
