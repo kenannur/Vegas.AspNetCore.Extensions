@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,75 +21,66 @@ namespace Vegas.AspNetCore.Authentication.DependencyInjection
         public static void AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             services.ConfigureSettings<IJwtSettings, JwtSettings>(configuration);
-
-            ConfigureJwtAuthentication(services);
+            services.AddAuthentication(_authenticationScheme)
+                    .AddJwtBearer();
+            ConfigureJwt(services);
         }
 
-        public static void AddJwtAuthentication(this IServiceCollection services, IJwtSettings settings)
+        public static void AddJwtAuthenticationCore(this IServiceCollection services, IConfiguration configuration)
         {
-            if (settings == null)
-            {
-                throw new ArgumentNullException(nameof(settings));
-            }
-            services.AddSingleton(settings);
-
-            ConfigureJwtAuthentication(services);
-        }
-
-        private static void ConfigureJwtAuthentication(this IServiceCollection services)
-        {
-            services.AddScoped<IJwtFactory, JwtFactory>();
-
-            /*
-            services.AddAuthentication(options =>
+            services.ConfigureSettings<IJwtSettings, JwtSettings>(configuration);
+            services.AddAuthenticationCore(options =>
             {
                 options.DefaultAuthenticateScheme = _authenticationScheme;
                 options.DefaultChallengeScheme = _authenticationScheme;
                 options.DefaultScheme = _authenticationScheme;
-            }).AddJwtBearer();
-            */
-            
-            services.AddAuthentication(_authenticationScheme)
-                    .AddJwtBearer();
-            
-            services.AddOptions<JwtBearerOptions>(_authenticationScheme)
-                    .Configure<IJwtSettings>((options, jwtSettings) =>
-                    {
-                        options.TokenValidationParameters = new TokenValidationParameters
-                        {
-                            ValidateIssuer = true,
-                            ValidateAudience = true,
-                            ValidateIssuerSigningKey = true,
-                            ValidIssuer = jwtSettings.Issuer,
-                            ValidAudience = jwtSettings.Audience,
-                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey))
-                        };
+            });
+            new AuthenticationBuilder(services).AddJwtBearer();
+            ConfigureJwt(services);
+        }
 
-                        options.Events = new JwtBearerEvents
+        private static void ConfigureJwt(IServiceCollection services)
+        {
+            services.AddScoped<IJwtFactory, JwtFactory>();
+            services
+                .AddOptions<JwtBearerOptions>(_authenticationScheme)
+                .Configure<IJwtSettings>((options, jwtSettings) =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = jwtSettings.Issuer,
+                        ValidAudience = jwtSettings.Audience,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey))
+                    };
+
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnChallenge = context =>
                         {
-                            OnChallenge = context =>
+                            if (context.AuthenticateFailure is SecurityTokenExpiredException)
                             {
-                                if (context.AuthenticateFailure is SecurityTokenExpiredException)
-                                {
-                                    context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                                    context.HttpContext.Items.Add("ErrorMessages", new List<string>
-                                    {
-                                        "SecurityTokenExpired_AuthenticationMessage"
-                                    });
-                                }
-                                return Task.CompletedTask;
-                            },
-                            OnForbidden = context =>
-                            {
-                                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
+                                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                                 context.HttpContext.Items.Add("ErrorMessages", new List<string>
                                 {
-                                    "Forbidden_AuthenticationMessage"
+                                                "SecurityTokenExpired_AuthenticationMessage"
                                 });
-                                return Task.CompletedTask;
                             }
-                        };
-                    });
+                            return Task.CompletedTask;
+                        },
+                        OnForbidden = context =>
+                        {
+                            context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
+                            context.HttpContext.Items.Add("ErrorMessages", new List<string>
+                            {
+                                            "Forbidden_AuthenticationMessage"
+                            });
+                            return Task.CompletedTask;
+                        }
+                    };
+                });
         }
     }
 }
