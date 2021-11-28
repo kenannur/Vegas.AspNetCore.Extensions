@@ -39,9 +39,16 @@ namespace Vegas.AspNetCore.Authentication.DependencyInjection
         {
             services.AddScoped<IJwtFactory, JwtFactory>();
 
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = _authenticationScheme;
+                options.DefaultChallengeScheme = _authenticationScheme;
+                options.DefaultScheme = _authenticationScheme;
+            }).AddJwtBearer();
+            /*
             services.AddAuthentication(_authenticationScheme)
                     .AddJwtBearer();
-
+            */
             services.AddOptions<JwtBearerOptions>(_authenticationScheme)
                     .Configure<IJwtSettings>((options, jwtSettings) =>
                     {
